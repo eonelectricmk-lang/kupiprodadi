@@ -596,6 +596,8 @@ export default function ProfilePage() {
   const [balanceInfo, setBalanceInfo] = useState<BalanceInfo | null>(null);
   const [activeTab, setActiveTab] = useState<TabKey>('ads');
   const [loading, setLoading] = useState(true);
+  const [promoteModal, setPromoteModal] = useState<{ productId: number; promoting: boolean } | null>(null);
+  const [topupForm, setTopupForm] = useState({ amount: '', show: false, loading: false });
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -821,7 +823,60 @@ export default function ProfilePage() {
   };
 
   const promoteProduct = (productId: number) => {
-    router.push(`/sell?promote=${productId}`);
+    setPromoteModal({ productId, promoting: false });
+  };
+
+  const doPromote = async () => {
+    if (!promoteModal) return;
+    setPromoteModal((prev) => prev ? { ...prev, promoting: true } : null);
+    try {
+      const res = await fetch(`/api/products/${promoteModal.productId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'promote', seller_id: user?.id, duration: 7 }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Грешка при промоција');
+
+      window.alert('Огласот е промовиран 7 дена!');
+      setPromoteModal(null);
+
+      const balanceRes = await fetch(`/api/user/balance?user_id=${user?.id}`);
+      const balanceData = await balanceRes.json();
+      if (balanceData && !balanceData.error) setBalanceInfo(balanceData as BalanceInfo);
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : 'Грешка при промоција');
+    } finally {
+      setPromoteModal((prev) => prev ? { ...prev, promoting: false } : null);
+    }
+  };
+
+  const doTopup = async () => {
+    const amount = Number(topupForm.amount);
+    if (!Number.isFinite(amount) || amount <= 0) {
+      window.alert('Внеси валиден износ');
+      return;
+    }
+    setTopupForm((prev) => ({ ...prev, loading: true }));
+    try {
+      const res = await fetch('/api/user/topup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user?.id, amount }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Грешка');
+
+      window.alert(`Додадени ${amount} MKD на сметката.`);
+      setTopupForm({ amount: '', show: false, loading: false });
+
+      const balanceRes = await fetch(`/api/user/balance?user_id=${user?.id}`);
+      const balanceData = await balanceRes.json();
+      if (balanceData && !balanceData.error) setBalanceInfo(balanceData as BalanceInfo);
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : 'Грешка при дополнување');
+      setTopupForm((prev) => ({ ...prev, loading: false }));
+    }
   };
 
   const tabs: Array<{ id: TabKey; label: string }> = [
@@ -1250,6 +1305,71 @@ export default function ProfilePage() {
           )}
         </div>
       </Container>
+
+      {promoteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl border border-[#1d2c43] bg-[#0a1628] p-6 shadow-2xl">
+            <h3 className="text-lg font-bold text-white">Промовирај оглас</h3>
+            <p className="mt-1 text-sm text-slate-400">Огласот ќе биде промовиран 7 дена на врвот на листатање.</p>
+
+            {balanceInfo && (
+              <div className="mt-4 space-y-2 rounded-xl border border-[#223653] bg-[#0b1727] p-4 text-sm">
+                <div className="flex justify-between"><span className="text-slate-400">Состојба:</span><span className="font-semibold text-emerald-400">{balanceInfo.balance.toFixed(2)} {balanceInfo.currency}</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Бонуси:</span><span className="font-semibold text-amber-400">{balanceInfo.bonus_balance.toFixed(2)} {balanceInfo.currency}</span></div>
+                <div className="border-t border-[#223653] pt-2 flex justify-between"><span className="text-slate-400">Цена на промоција:</span><span className="font-semibold text-white">{balanceInfo.promote_cost} {balanceInfo.currency}</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">По промоција:</span><span className="font-semibold text-slate-200">
+                  {(balanceInfo.balance + balanceInfo.bonus_balance - balanceInfo.promote_cost).toFixed(2)} {balanceInfo.currency}
+                </span></div>
+              </div>
+            )}
+
+            <div className="mt-5 flex flex-col gap-2">
+              <button
+                onClick={doPromote}
+                disabled={promoteModal.promoting}
+                className="w-full rounded-xl bg-red-600 py-3 font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {promoteModal.promoting ? 'Се промовира...' : `Промовирај за ${balanceInfo?.promote_cost || 50} ${balanceInfo?.currency || 'MKD'}`}
+              </button>
+
+              <div className="flex gap-2">
+                {topupForm.show ? (
+                  <>
+                    <input
+                      type="number"
+                      value={topupForm.amount}
+                      onChange={(e) => setTopupForm((prev) => ({ ...prev, amount: e.target.value }))}
+                      placeholder="Износ"
+                      className="h-11 flex-1 rounded-xl border border-[#223653] bg-[#0b1727] px-4 text-sm text-white outline-none focus:border-emerald-500"
+                    />
+                    <button
+                      onClick={doTopup}
+                      disabled={topupForm.loading}
+                      className="rounded-xl bg-emerald-600 px-5 font-bold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {topupForm.loading ? '...' : 'Додај'}
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => setTopupForm((prev) => ({ ...prev, show: true }))}
+                    className="flex-1 rounded-xl border border-emerald-600/40 bg-emerald-600/10 py-3 font-semibold text-emerald-400 transition hover:bg-emerald-600/20"
+                  >
+                    + Напополни сметка
+                  </button>
+                )}
+              </div>
+
+              <button
+                onClick={() => { setPromoteModal(null); setTopupForm({ amount: '', show: false, loading: false }); }}
+                className="mt-1 text-sm text-slate-500 underline underline-offset-2 hover:text-slate-300"
+              >
+                Откажи
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
