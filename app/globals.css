@@ -1,0 +1,311 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #050b17;
+  color: #e5e7eb;
+}
+
+html.light body {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+html.light main {
+  background-color: #f1f5f9 !important;
+}
+
+html.light #hero-text [class*="text-"]:not([class*="text-red"]),
+html.light #hero-text h1 {
+  color: #0f172a !important;
+}
+
+html.light .force-light-hero [class*="text-"]:not([class*="text-red"]):not([class*="text-blue"]):not([class*="text-green"]):not([class*="text-amber"]):not([class*="text-emerald"]):not([class*="text-pink"]):not([class*="text-violet"]):not([class*="text-sky"]):not([class*="text-orange"]),
+html.light .force-light-hero h1,
+html.light .force-light-hero h2,
+html.light .force-light-hero p,
+html.light .force-light-hero li,
+html.light .force-light-hero span {
+  color: #0f172a !important;
+}
+
+html.light .force-dark-card {
+  background: #0b1423 !important;
+  border-color: #1d2c43 !important;
+  color: #ffffff !important;
+}
+
+html.light .force-dark-card.force-dark-gradient {
+  background: linear-gradient(135deg, #081120 0%, #0c182b 56%, #091423 100%) !important;
+}
+
+html.light .force-dark-card [class*="bg-[#081223]"],
+html.light .force-dark-card [class*="bg-[#0a1628]"],
+html.light .force-dark-card [class*="bg-[#0b1423]"],
+html.light .force-dark-card [class*="bg-[#0b1727]"],
+html.light .force-dark-card [class*="bg-[#0d1b2f]"] {
+  background-color: inherit;
+}
+
+html.light .force-dark-card .force-dark-subtle {
+  background: #081223 !important;
+  border-color: #223653 !important;
+}
+
+html.light .force-dark-card .force-dark-panel {
+  background: #0a1628 !important;
+  border-color: #223653 !important;
+}
+
+html.light .force-dark-card .force-dark-pill {
+  background: #0b1727 !important;
+  border-color: #223653 !important;
+}
+
+html.light .force-dark-card [class*="border-[#"] {
+  border-color: #223653 !important;
+}
+
+html.light .force-dark-card [class*="text-white"]:not(button):not([class*="text-red"]):not([class*="text-blue"]):not([class*="text-green"]):not([class*="text-amber"]):not([class*="text-emerald"]):not([class*="text-pink"]):not([class*="text-violet"]):not([class*="text-sky"]):not([class*="text-orange"]),
+html.light .force-dark-card .force-dark-heading {
+  color: #ffffff !important;
+}
+
+html.light .force-dark-card [class*="text-slate-"],
+html.light .force-dark-card [class*="text-gray-"] {
+  color: #94a3b8 !important;
+}
+
+html.light [class*="bg-[#040914]"],
+html.light [class*="bg-[#050c16]"],
+html.light [class*="bg-[#07101c]"],
+html.light [class*="bg-[#081223]"],
+html.light [class*="bg-[#0a1322]"],
+html.light [class*="bg-[#0b1321]"],
+html.light [class*="bg-[#0b1423]"],
+html.light [class*="bg-[#0b1727]"],
+html.light [class*="bg-[#0c1726]"],
+html.light [class*="bg-[#0d1727]"],
+html.light [class*="bg-[#0e1828]"],
+html.light [class*="bg-[#0f1a2b]"],
+html.light [class*="bg-[#0f1b2b]"],
+html.light [class*="bg-[#101f33]"],
+html.light [class*="bg-[#111f33]"],
+html.light [class*="bg-[#121f33]"],
+html.light [class*="bg-[#122038]"],
+html.light [class*="bg-[#13243c]"],
+html.light [class*="bg-[#14243a]"],
+html.light [class*="bg-[#16263d]"],
+html.light [class*="bg-[#162945]"],
+html.light [class*="bg-[#172945]"],
+html.light [class*="bg-[#1a2d49]"] {
+  background-color: #ffffff !important;
+}
+
+html.light [class*="bg-[#10131f]"] {
+  background-color: #ffffff !important;
+}
+
+html.light [class*="text-white"]:not(button):not(.admin-dark-button):not([class*="text-red"]):not([class*="text-blue"]):not([class*="text-green"]):not([class*="text-amber"]):not([class*="text-emerald"]):not([class*="text-pink"]):not([class*="text-violet"]):not([class*="text-sky"]):not([class*="text-orange"]):not([class*="bg-red"]) {
+  color: #0f172a !important;
+}
+
+html.light [class*="text-slate-"]:not(button):not(.admin-dark-button),
+html.light [class*="text-gray-"]:not(button):not(.admin-dark-button) {
+  color: #0f172a !important;
+}
+
+html.light [class*="border-gray-"] {
+  border-color: #475569 !important;
+}
+
+html.light [class*="border-"][class*="#"] {
+  border-color: #334155 !important;
+}
+
+html.light #hero-banner {
+  border-color: #0f172a !important;
+  border-width: 2px !important;
+}
+
+html.light button.admin-dark-button,
+html.light .admin-dark-button,
+html.light .admin-dark-button:hover,
+html.light .admin-dark-button:focus,
+html.light .admin-dark-button:active {
+  color: #ffffff !important;
+}
+
+html.light button.admin-dark-button[class*="bg-"],
+html.light .admin-dark-button[class*="bg-"] {
+  color: #ffffff !important;
+}
+
+html.light button.admin-dark-button *,
+html.light .admin-dark-button * {
+  color: inherit !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+html.light .sell-safe-badge {
+  background: #dcfce7 !important;
+  border-color: #86efac !important;
+  color: #166534 !important;
+}
+
+html.light .sell-safe-badge svg {
+  color: #16a34a !important;
+}
+
+html.light .subcategory-pill {
+  background: #dbeafe !important;
+  border-color: #60a5fa !important;
+  color: #1d4ed8 !important;
+}
+
+html.light a.subcategory-pill,
+html.light a.subcategory-pill:visited,
+html.light a.subcategory-pill:hover,
+html.light a.subcategory-pill:active {
+  color: #1d4ed8 !important;
+}
+
+html.light .subcategory-pill:hover {
+  background: #bfdbfe !important;
+  color: #1e40af !important;
+}
+
+html.light .category-active-chip {
+  background: #dbeafe !important;
+  color: #1e3a8a !important;
+}
+
+html.light .category-active-chip *,
+html.light .category-active-chip svg {
+  color: inherit !important;
+}
+
+html.light .category-back-chip {
+  background: #e2e8f0 !important;
+  border-color: #94a3b8 !important;
+  color: #475569 !important;
+}
+
+html.light .category-back-chip:hover {
+  background: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+html.light .product-detail-page {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.light .browse-shell {
+  background: #f8fafc !important;
+}
+
+html.light .verified-seller-badge {
+  background: #dcfce7 !important;
+  border-color: #86efac !important;
+  color: #166534 !important;
+}
+
+html.light .verified-seller-badge *,
+html.light .verified-seller-text,
+html.light .verified-seller-text * {
+  color: #16a34a !important;
+}
+
+html.light .seller-rating-text,
+html.light .seller-rating-text * {
+  color: #ca8a04 !important;
+}
+
+html.dark .admin-dark-input {
+  background: #0b1727 !important;
+  border-color: #223653 !important;
+  color: #ffffff !important;
+}
+
+html.dark .admin-dark-input::placeholder {
+  color: #64748b !important;
+}
+
+/* Final light-theme overrides for intentionally dark cards/panels. Keep at the end so
+   broad light selectors above do not wash out text inside these components. */
+html.light .force-dark-card {
+  background: #0b1423 !important;
+  border-color: #1d2c43 !important;
+  color: #ffffff !important;
+}
+
+html.light .force-dark-card.force-dark-gradient {
+  background: linear-gradient(135deg, #081120 0%, #0c182b 56%, #091423 100%) !important;
+}
+
+html.light .force-dark-card .force-dark-subtle {
+  background: #081223 !important;
+  border-color: #223653 !important;
+}
+
+html.light .force-dark-card .force-dark-panel {
+  background: #0a1628 !important;
+  border-color: #223653 !important;
+}
+
+html.light .force-dark-card .force-dark-pill {
+  background: #0b1727 !important;
+  border-color: #223653 !important;
+}
+
+html.light .force-dark-card,
+html.light .force-dark-card [class*="border-[#"] {
+  border-color: #223653 !important;
+}
+
+html.light .force-dark-card .force-dark-heading,
+html.light .force-dark-card [class*="text-white"]:not(button):not([class*="text-red"]):not([class*="text-blue"]):not([class*="text-green"]):not([class*="text-amber"]):not([class*="text-emerald"]):not([class*="text-pink"]):not([class*="text-violet"]):not([class*="text-sky"]):not([class*="text-orange"]) {
+  color: #ffffff !important;
+}
+
+html.light .force-dark-card [class*="text-slate-"],
+html.light .force-dark-card [class*="text-gray-"] {
+  color: #94a3b8 !important;
+}
+
+html.light .force-dark-card [class*="bg-[#081223]"],
+html.light .force-dark-card [class*="bg-[#0a1628]"],
+html.light .force-dark-card [class*="bg-[#0b1423]"],
+html.light .force-dark-card [class*="bg-[#0b1727]"],
+html.light .force-dark-card [class*="bg-[#0d1b2f]"] {
+  background-color: inherit;
+}
+
+html.light .force-light-hero [class*="text-"]:not([class*="text-red"]):not([class*="text-blue"]):not([class*="text-green"]):not([class*="text-amber"]):not([class*="text-emerald"]):not([class*="text-pink"]):not([class*="text-violet"]):not([class*="text-sky"]):not([class*="text-orange"]),
+html.light .force-light-hero h1,
+html.light .force-light-hero h2,
+html.light .force-light-hero p,
+html.light .force-light-hero li,
+html.light .force-light-hero span {
+  color: #0f172a !important;
+}

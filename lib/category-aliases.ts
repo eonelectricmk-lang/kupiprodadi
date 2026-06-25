@@ -1,0 +1,41 @@
+export const CATEGORY_SLUG_ALIASES: Record<string, string> = {
+  nedvoznosti: 'nedviznosti',
+  'hrana-gotvenj': 'hrana-gotvenje',
+  'dom-i-gradina': 'dom-gradina',
+  moda: 'moda-obleka',
+  sport: 'sportska-oprema',
+  biznis: 'biznis-masini-alati',
+  'casovnici-nakij': 'casovnici-nakit',
+  'bebi-detski': 'bebi-deca',
+  'cd-dvd-vhs': 'muzika-filmovi-medija',
+  'slobodno-vreme-hobi': 'hobi-zivotni',
+  'biznis-masini': 'biznis-masini-alati',
+  'uslugi-serzeri': 'uslugi-servis',
+  'odmor-turizm': 'patuvanja-turizam',
+  'masni-mazи': 'obleka-mazi',
+  nametej: 'namestaj',
+  polnaci: 'polnaci-kabli',
+  desktop: 'desktop-kompjuteri',
+  periferija: 'periferni-uredi',
+  vinilni: 'vinilni-ploci',
+  vhs: 'vhs-kaseti',
+  obrazovni: 'obrazovni-knigi',
+  'kolekcionerski': 'kolekcionerski-predmeti',
+  anticki: 'anticki-predmeti',
+  'umetni-sliki': 'umetnicki-sliki',
+  'work-equipment': 'rabotna-oprema',
+  'popraska-elektronika': 'popravka-elektronika',
+  'voz-uslugi': 'transport-uslugi',
+  kompjuterski: 'kompjuterski-uslugi',
+  'polni-raboti': 'polno-vreme',
+  'delumni-raboti': 'skrateno-vreme',
+  praktikantski: 'praktikatura',
+  'renti-auta': 'iznajmuvanje-vozila',
+  'udoumuvanje': 'smestuvanje',
+  razni: 'razni-proizvodi',
+};
+
+export function normalizeCategorySlug(slug?: string | null) {
+  if (!slug) return '';
+  return CATEGORY_SLUG_ALIASES[slug] || slug;
+}
